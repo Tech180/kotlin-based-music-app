@@ -1,9 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.KotlinBasedMusicApp" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.Musicify" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:fontFamily">@font/robotobold</item>
+        <item name="colorPrimary">@color/white</item>
+
+        <!-- Dark mode customization -->
+        <item name="colorPrimaryDark">@color/grey</item>
     </style>
 
-    <style name="Theme.KotlinBasedMusicApp" parent="Base.Theme.KotlinBasedMusicApp" />
+    <style name="Theme.Musicify" parent="Base.Theme.Musicify" />
 </resources>
