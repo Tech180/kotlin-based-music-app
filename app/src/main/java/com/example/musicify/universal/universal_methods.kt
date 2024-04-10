@@ -10,7 +10,7 @@ import java.io.DataOutputStream
 
 open class universal_methods : AppCompatActivity() {
 
-    protected fun removeTitleBar(activity: AppCompatActivity) {
+    internal fun removeTitleBar(activity: AppCompatActivity) {
         activity.requestWindowFeature(Window.FEATURE_NO_TITLE)
         activity.window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,

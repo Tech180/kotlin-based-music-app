@@ -12,6 +12,7 @@ import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 
+/*
 class TearDrop : AppCompatActivity() {
 
     private lateinit var teardropButton: MaterialButton
@@ -28,6 +29,7 @@ class TearDrop : AppCompatActivity() {
             animateToTeardrop()
         }
     }
+
 
     private fun animateToTeardrop() {
         val shapeModel = ShapeAppearanceModel.builder()
@@ -72,3 +74,5 @@ class TearDrop : AppCompatActivity() {
         animatorSet.start()
     }
 }
+
+ */

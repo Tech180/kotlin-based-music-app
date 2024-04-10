@@ -1,5 +1,8 @@
 package com.example.musicify.titleScreen
 
+import com.example.musicify.ui.menu.Drawer
+
+import android.content.Intent
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.widget.*
@@ -7,6 +10,7 @@ import coil.Coil
 import coil.load
 import coil.util.CoilUtils
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -18,6 +22,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.example.musicify.R
 import com.example.musicify.universal.universal_methods
+import com.google.android.material.button.MaterialButton
 import java.lang.reflect.Modifier
 
 
@@ -26,8 +31,6 @@ class TitleScreen : universal_methods() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // call universal method for removing title bar
-        removeTitleBar(this)
         // set layout
         setContentView(R.layout.activity_title_screen)
 
@@ -51,6 +54,14 @@ class TitleScreen : universal_methods() {
         //Glide.with(this).load(R.drawable.music).into(music)
 
         loadGIF(music, R.drawable.musiclight);
+
+        val startButton: MaterialButton = findViewById(R.id.start)
+
+        startButton.setOnClickListener {
+            val intent = Intent(this, Drawer::class.java)
+
+            startActivity(intent)
+        }
 
         /*
         val rootButton: Button = findViewById(R.id.root)

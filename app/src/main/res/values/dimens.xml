@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="teardrop_corner_radius">50dp</dimen>
-    <integer name="teardrop_animation_duration">500</integer>
-</resources>
