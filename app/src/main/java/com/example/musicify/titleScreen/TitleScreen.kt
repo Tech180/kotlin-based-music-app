@@ -1,113 +1,147 @@
 package com.example.musicify.titleScreen
 
-import com.example.musicify.ui.menu.Drawer
-
+import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.AnimationDrawable
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
-import android.widget.*
-import coil.Coil
-import coil.load
-import coil.util.CoilUtils
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.gif.GifDrawable
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.example.musicify.ui.menu.DrawerActivity
+import kotlinx.coroutines.launch
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
+import coil.ImageLoader
+import coil.compose.rememberImagePainter
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
 import com.example.musicify.R
-import com.example.musicify.universal.universal_methods
-import com.google.android.material.button.MaterialButton
-import java.lang.reflect.Modifier
 
 
-class TitleScreen : universal_methods() {
-
+class TitleScreen : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // set layout
-        setContentView(R.layout.activity_title_screen)
-
-        // set views
-        val music: ImageView = findViewById(R.id.music)
-        //val background: ImageView = findViewById(R.id.background)
-        val screen: ImageView = findViewById(R.id.screen)
-
-        val signUp: TextView = findViewById(R.id.signUp)
-        val title: TextView = findViewById(R.id.title)
-
-        val start: Button = findViewById(R.id.start)
-        val guest: Button = findViewById(R.id.guest)
-        val login: Button = findViewById(R.id.login)
-
-        val email: EditText = findViewById(R.id.fragUsername)
-        val pass: EditText = findViewById(R.id.fragPassword)
-
-        // load in gifs to proper ImageViews
-        //Glide.with(this).load(R.drawable.background).into(background)
-        //Glide.with(this).load(R.drawable.music).into(music)
-
-        loadGIF(music, R.drawable.musiclight);
-
-        val startButton: MaterialButton = findViewById(R.id.start)
-
-        startButton.setOnClickListener {
-            val intent = Intent(this, Drawer::class.java)
-
-            startActivity(intent)
+        setContent {
+            MusicifyTitleScreen()
         }
+    }
+}
 
-        /*
-        val rootButton: Button = findViewById(R.id.root)
-        rootButton.setOnClickListener {
-            val superuserCommands = listOf("echo Hello from superuser!", "ls /data")
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun MusicifyTitleScreen() {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
 
-            // Execute superuser commands
-            val result = superUser(superuserCommands)
+    val imageLoader = ImageLoader.Builder(context).components {
+            if (SDK_INT >= 28) {
+                add(ImageDecoderDecoder.Factory())
+            } else {
+                add(GifDecoder.Factory())
+            }
+        }.build()
 
-            val resultString = result.toString()
-
-            Toast.makeText(applicationContext, resultString, Toast.LENGTH_SHORT).show()
+    Scaffold(
+        content = { paddingValues ->
+            Content(
+                modifier = Modifier.padding(paddingValues).background(color = MaterialTheme.colorScheme.background),
+                onClickStart = {
+                    coroutineScope.launch {
+                        navigateToDrawer(context)
+                    }
+                },
+                imageLoader = imageLoader
+            )
         }
-         */
+    )
+}
 
-        // create new views array for Controller constructor
-        // 0:music, 1:Screen, 2:signUp, 3:start, 4:guest, 5:login, 6:user, 7:pass, 8: title
-        val views = arrayOf(music, screen, signUp, start, guest, login, email, pass, title)
-        //val views = arrayOf(music, screen, start, guest, title)
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun Content(
+    modifier: Modifier = Modifier,
+    onClickStart: () -> Unit,
+    imageLoader: ImageLoader
+) {
+    val robotoBold = FontFamily(Font(R.font.robotobold))
 
-        // create controller constructor --> sets up onClicks and controls animations
-        Controller(views, this)
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Title
+        Text(
+            text = "Musicify",
+            style = androidx.compose.ui.text.TextStyle(
+                fontFamily = robotoBold,
+                fontSize = 32.sp,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.Bold
+            ),
+            modifier = Modifier.padding(vertical = 20.dp)
+        )
+
+        // Animated GIF Image
+        val painter = rememberImagePainter (
+            data = R.drawable.musicdark,
+            imageLoader = imageLoader,
+            builder = {
+                // Disable hardware acceleration to avoid potential issues with some GIFs
+                allowHardware(false)
+            }
+        )
+        Image(
+            painter = painter,
+            contentDescription = null,
+            modifier = Modifier.fillMaxWidth()
+                .padding(16.dp)
+                .padding(16.dp)
+        )
+
+        // Start Button
+        Spacer(modifier = Modifier.height(320.dp))
+        TitleButton (
+            text = "Start",
+            onClick = onClickStart
+        )
     }
+}
 
-    private fun loadGIF(imageView: ImageView, drawableRes: Int) {
-        Glide.with(this).asGif().load(drawableRes)
-            .listener(object : RequestListener<GifDrawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<GifDrawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    return false
-                }
-
-                override fun onResourceReady(
-                    resource: GifDrawable?,
-                    model: Any?,
-                    target: Target<GifDrawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    resource?.setLoopCount(1)
-                    return false
-                }
-            }).into(imageView)
+@Composable
+fun TitleButton(text: String, onClick: () -> Unit) {
+    OutlinedButton(
+        onClick = onClick,
+        shape = RoundedCornerShape(50),
+        modifier = Modifier
+            .width(220.dp)
+            .height(50.dp),
+    ) {
+        Text(
+            text = text,
+            fontSize = 18.sp,
+            color = MaterialTheme.colorScheme.primary
+        )
     }
+}
+fun navigateToDrawer(context: Context) {
+    val intent = Intent(context, DrawerActivity::class.java)
+    context.startActivity(intent)
 }

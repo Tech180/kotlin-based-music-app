@@ -17,7 +17,7 @@
         <activity
             android:name=".titleScreen.TitleScreen"
             android:exported="true"
-            android:screenOrientation="fullSensor">
+        >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,7 +26,7 @@
         </activity>
 
         <activity
-            android:name=".ui.menu.Drawer"
+            android:name=".ui.menu.DrawerActivity"
             android:exported="true"
             android:screenOrientation="fullSensor"
             android:theme="@style/Theme.Musicify"

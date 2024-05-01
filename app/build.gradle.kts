@@ -46,7 +46,7 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.13.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.annotation:annotation:1.7.1")
 
@@ -56,12 +56,12 @@ dependencies {
     //implementation("androidx.compose.foundation:foundation-android:1.5.4")
 
     // Material UI
-    implementation("androidx.compose.material:material:1.5.4")
-    implementation("androidx.compose.ui:ui:1.5.4")
-    implementation("androidx.compose.ui:ui-util:1.5.4")
-    implementation("androidx.compose.ui:ui-graphics:1.5.4")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.5.4")
-    implementation("androidx.compose.material3:material3:1.1.2")
+    //implementation("androidx.compose.material:material:1.6.5")
+    implementation("androidx.compose.ui:ui:1.6.6")
+    implementation("androidx.compose.ui:ui-util:1.6.6")
+    implementation("androidx.compose.ui:ui-graphics:1.6.6")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.6.6")
+    implementation("androidx.compose.material3:material3:1.2.1")
 
 
     // Testing
@@ -72,12 +72,22 @@ dependencies {
     // GIF Loader
     implementation("com.github.bumptech.glide:glide:4.14.2")
     implementation("com.github.bumptech.glide:gifdecoder:4.14.2")
-    implementation("io.coil-kt:coil:2.5.0")
-    implementation("io.coil-kt:coil-gif:2.5.0")
+    implementation("io.coil-kt:coil:2.6.0")
+    implementation("io.coil-kt:coil-gif:2.6.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
-    implementation("com.google.accompanist:accompanist-drawablepainter:0.20.0")
+
+    implementation("com.google.accompanist:accompanist-drawablepainter:0.32.0")
     implementation("com.google.accompanist:accompanist-navigation-animation:0.20.0")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.20.0")
 
+    // Music
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.33.2-alpha")
+    implementation ("androidx.media3:media3-exoplayer:1.3.1")
+
     // implementation("dev.rikka.rikkax.parcelablelist")
+
+    // Font Awesome
+    //implementation ("info.androidhive:fontawesome:0.0.5")
+    //implementation ("com.android.support:appcompat-v7:28.0.0")
 }
