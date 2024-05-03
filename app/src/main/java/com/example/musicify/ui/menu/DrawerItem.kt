@@ -1,6 +1,6 @@
 package com.example.musicify.ui.menu
 
-import com.example.musicify.ui.screens.Screens
+import com.example.musicify.ui.models.Screens
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
@@ -10,11 +10,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,7 +34,7 @@ import androidx.compose.ui.unit.dp
 fun DrawerItem (
     modifier: Modifier = Modifier,
     screen: Screens,
-    isSelected: Boolean,
+    isSelected: Boolean
 ) {
     Box (
         modifier = modifier.fillMaxSize(),
@@ -74,8 +71,7 @@ fun DrawerItem (
                 .background(
                     color = MaterialTheme.colorScheme.surface,
                     shape = RoundedCornerShape(20.dp)
-                )
-                ,
+                ),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         )  {
@@ -116,12 +112,12 @@ fun FlipIcon(
         label = ""
     ).value
 
-    val offsetY = animateDpAsState(
+    val offsetY = animateDpAsState (
         targetValue = if (isActive) (-6).dp else 0.dp,
         animationSpec = spring(
             stiffness = Spring.StiffnessLow,
             dampingRatio = Spring.DampingRatioMediumBouncy
-        )
+        ), label = ""
     ).value
 
     Box(

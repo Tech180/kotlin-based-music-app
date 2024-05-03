@@ -1,4 +1,4 @@
-package com.example.musicify.ui.screens
+package com.example.musicify.ui.models
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Home
@@ -14,7 +14,7 @@ sealed class Screens (
     val activeIcon: ImageVector,
     val inactiveIcon: ImageVector
 ) {
-    data object Home : Screens("Home", Icons.Filled.Home, Icons.Outlined.Home)
-    data object Library : Screens("Library", Icons.Filled.Person, Icons.Outlined.Person)
-    data object Settings : Screens("Settings", Icons.Filled.Settings, Icons.Outlined.Settings)
+    data object Home : Screens("home", Icons.Filled.Home, Icons.Outlined.Home)
+    data object Library : Screens("library", Icons.Filled.Person, Icons.Outlined.Person)
+    data object Settings : Screens("settings", Icons.Filled.Settings, Icons.Outlined.Settings)
 }

@@ -19,13 +19,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
-import com.example.musicify.ui.screens.Screens
+import androidx.navigation.NavHostController
+import com.example.musicify.ui.models.Screens
+
 
 @Composable
 fun Navigation (
-    screens: List<Screens>
+    screens: List<Screens>,
+    navController: NavHostController
 ) {
-    var selectedScreen by remember { mutableStateOf(0) }
+    var selectedScreen by remember { mutableStateOf(screens.first()) }
+
     Box(
         Modifier
             .shadow(5.dp)
@@ -38,8 +42,8 @@ fun Navigation (
             Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            for (screen in screens) {
-                val isSelected = screen == screens[selectedScreen]
+            screens.forEach { screen ->
+                val isSelected = screen == selectedScreen
 
                 val weight by animateFloatAsState(
                     targetValue = if (isSelected) 1.5f else 1f, label = ""
@@ -57,24 +61,15 @@ fun Navigation (
                             interactionSource = interactionSource,
                             indication = null
                         ) {
-                            selectedScreen = screens.indexOf(screen)
+                            selectedScreen = screen
+
+                            navController.navigate(screen.title.lowercase())
                         },
                         screen = screen,
-                        isSelected = isSelected
+                        isSelected = isSelected,
                     )
                 }
             }
         }
     }
 }
-
-/*
-@Composable
-fun NavigationHost(navController: NavController) {
-    NavHost(navController, startDestination = Screens.Home.title.lowercase()) {
-        composable(Screens.Home.title.lowercase()) { HomeScreen() }
-        composable(Screens.Library.title.lowercase()) { /* LibraryScreen() */ }
-        composable(Screens.Settings.title.lowercase()) { /* SettingsScreen() */ }
-    }
-}
- */

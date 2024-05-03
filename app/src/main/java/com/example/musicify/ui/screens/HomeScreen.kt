@@ -10,31 +10,68 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.musicify.R
+import com.example.musicify.ui.component.CustomSearchBar
+import com.example.musicify.ui.component.MediaCarousel
+import com.example.musicify.ui.models.Cover
 
 @Composable
 fun HomeScreen() {
+    var searchText by remember { mutableStateOf("") }
+
+
+    //Temporary until artist, albums, songs, and music player are set up
+    val mediaList = remember {
+        listOf(
+            Cover(0, "Title 1", "poster_1", "backdrop_1", "Overview 1"),
+            Cover(1, "Title 2", "poster_2", "backdrop_2", "Overview 2"),
+            Cover(2, "Title 3", "poster_3", "backdrop_3", "Overview 3"),
+        )
+    }
+
+
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        verticalArrangement = Arrangement.Top
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.folder_regular),
-            contentDescription = "Musicify Logo",
-            modifier = Modifier.size(120.dp)
+        CustomSearchBar(
+            title = { Text("Search text") },
+            searchText = searchText,
+            onSearchTextChange = { searchText = it },
+            onClearClick = { searchText = "" }
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Welcome to Musicify!")
-        Text(text = "Discover and enjoy unlimited music")
 
-        MusicPlayer()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+        ) {
+            MediaCarousel(
+                list = mediaList,
+                totalItemsToShow = 10,
+                onItemClicked = {
+                    /* handle item click */
+                }
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.folder_regular),
+                contentDescription = "Musicify Logo",
+                modifier = Modifier.size(120.dp)
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(text = "Welcome to Musicify!")
+            Text(text = "Discover and enjoy unlimited music")
+            Spacer(modifier = Modifier.height(16.dp))
+            MusicPlayer()
+        }
     }
 }
+
 
 @Composable
 fun MusicPlayer() {

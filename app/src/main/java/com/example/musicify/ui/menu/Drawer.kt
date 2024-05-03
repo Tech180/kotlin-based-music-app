@@ -7,10 +7,15 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.musicify.ui.screens.Screens
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.example.musicify.ui.screens.HomeScreen
+import com.example.musicify.ui.models.Screens
 import com.example.musicify.ui.theme.MusicifyTheme
+import androidx.navigation.compose.composable
+import com.example.musicify.ui.screens.LibraryScreen
+
 
 class DrawerActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +29,8 @@ class DrawerActivity : ComponentActivity() {
         }
         */
         setContent {
+            val navController = rememberNavController()
+
             val screen = listOf(
                 Screens.Home,
                 Screens.Library,
@@ -35,66 +42,22 @@ class DrawerActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.Bottom
-                    ) {
-                        Navigation (screens = screen)
-                    }
+                    Column {
+
+                        Box(Modifier.weight(1f)) {
+                            NavHost(navController = navController, startDestination = Screens.Home.title.lowercase()) {
+                                composable(Screens.Home.title.lowercase()) { HomeScreen() }
+                                composable(Screens.Library.title.lowercase()) { LibraryScreen() }
+                                composable(Screens.Settings.title.lowercase()) { /*SettingsScreen() */}
+                            }
+                        }
+
+                        Navigation (screens = screen, navController = navController)                    }
                 }
             }
         }
     }
 }
-
-/*
-@Composable
-private fun Drawer(
-    modifier: Modifier = Modifier,
-    screen: Screens,
-    isSelected: Boolean,
-) {
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
-    ) {
-        Row(
-            modifier = Modifier
-                .height(if (isSelected) 36.dp else 26.dp)
-                .shadow(
-                    elevation = if (isSelected) 15.dp else 0.dp,
-                    shape = RoundedCornerShape(20.dp)
-                )
-                .background(
-                    color = MaterialTheme.colors.surface,
-                    shape = RoundedCornerShape(20.dp)
-                ),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-        ) {
-            Icon(
-                rememberVectorPainter(
-                    image = if (isSelected) screen.activeIcon else screen.inactiveIcon
-                ),
-                contentDescription = screen.title,
-                modifier = Modifier
-                    .align(Alignment.CenterVertically)
-                    .fillMaxHeight()
-                    .padding(start = 11.dp)
-                    .alpha(if (isSelected) 1f else .5f)
-                    .size(if (isSelected) 26.dp else 20.dp),
-            )
-
-            if (isSelected) {
-                Text(
-                    text = screen.title,
-                    modifier = Modifier.padding(start = 8.dp, end = 10.dp),
-                    maxLines = 1,
-                )
-            }
-        }
-    }
-}
- */
 
 /*
 @Composable
